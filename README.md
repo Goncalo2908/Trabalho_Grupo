@@ -1,4 +1,4 @@
-# Trabalho_Grupo.Trabalho_Grupo
+# Trabalho_Grupo.DD_1261357_1261084
 
 ## 📱 Análise da Utilização Diária de Redes Sociais
 
@@ -164,17 +164,17 @@ j) Most balanced users
 
 ## 🚀 Como compilar e executar
 
-A classe está no pacote `Trabalho_Grupo`, por isso os comandos correm a partir da pasta **acima** de `Trabalho_Grupo/`:
+A classe está no pacote `DD_1261357_1261084`, por isso os comandos correm a partir da pasta **acima** de `Trabalho_Grupo/`:
 
 ```bash
 # Compilar
 javac Trabalho_Grupo/Trabalho_Grupo.java
 
 # Executar (introduzir os dados pelo teclado)
-java Trabalho_Grupo.Trabalho_Grupo
+java Trabalho_Grupo.DD_1261357_1261084
 
 # Executar com os dados de um ficheiro
-java Trabalho_Grupo.Trabalho_Grupo < dados.txt
+java Trabalho_Grupo.DD_1261357_1261084 < dados.txt
 ```
 
 ---

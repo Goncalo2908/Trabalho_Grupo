@@ -1,7 +1,7 @@
 package Trabalho_Grupo;
 import java.util.Scanner;
 
-public class Trabalho_Grupo {
+public class DD_1261357_1261084 {
 
     // Descrição:
     public static void main(String[] args) {
