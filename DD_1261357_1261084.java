@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class DD_1261357_1261084 {
 
-    // Descrição: Isto é um teste.
+    // Descrição: Isto é um teste....
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         sc.close();
