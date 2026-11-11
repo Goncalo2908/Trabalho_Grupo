@@ -9,6 +9,7 @@ public class DD_1261357_1261084 {
         String [] nomes = ler_matrizesStrings(sc);
         String [] redes_sociais = ler_matrizesStrings(sc);
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
+        imprimir_tabela(nomes, redes_sociais, minutos);
         sc.close();
     }
 
@@ -33,4 +34,8 @@ public class DD_1261357_1261084 {
         return minutos;
     }
 
+    //Descrição: Imprimir todos os dados em formato de tabela
+    public static void imprimir_tabela(String[] nomes, String[] redes, int[][] minutos){
+        System.out.println("b) Social Media Usage (minutes/day)");
+    }
 }
