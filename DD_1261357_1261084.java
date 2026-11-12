@@ -36,6 +36,6 @@ public class DD_1261357_1261084 {
 
     //Descrição: Imprimir todos os dados em formato de tabela
     public static void imprimir_tabela(String[] nomes, String[] redes, int[][] minutos){
-        System.out.println("b) Social Media Usage (minutes/day)");
+        System.out.println("b) Social Media Usage (minutes/day)");a
     }
 }
