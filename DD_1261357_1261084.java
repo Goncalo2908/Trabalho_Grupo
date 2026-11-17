@@ -1,16 +1,18 @@
 package Trabalho_Grupo;
 import java.util.Scanner;
+import java.util.Locale;
 
 public class DD_1261357_1261084 {
 
     // Descrição:
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
         String[] nomes = ler_matrizesStrings(sc);
         String[] redes_sociais = ler_matrizesStrings(sc);
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
         imprimir_tabela(nomes, redes_sociais, minutos);
-        imprimir_totais(nomes, minutos);
+        imprimir_totais(nomes, minutos, redes_sociais);
         sc.close();
     }
 
@@ -64,11 +66,12 @@ public class DD_1261357_1261084 {
     }
 
     //Descrição: Imprimir o total de minutos de cada pessoa
-    public static void imprimir_totais(String[] nomes, int[][] minutos) {
-        System.out.println("c) Total Minutes per Person");
+    public static void imprimir_totais(String[] nomes, int[][] minutos, String[] redes_sociais) {
+        System.out.println("c) Daily usage");
         for (int i = 0; i < nomes.length; i++) {
-            int total = calcular_total(minutos[i]);   // passa a linha da pessoa i
-            System.out.printf("%-12s%d%n", nomes[i], total);
+            int total = calcular_total(minutos[i]);
+            double media = (double) total / redes_sociais.length;
+            System.out.printf(Locale.US, "%-10s: %d min (%5.1f min average/network)%n", nomes[i], total, media);
         }
         System.out.println();
     }
