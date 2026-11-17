@@ -10,6 +10,7 @@ public class DD_1261357_1261084 {
         String[] redes_sociais = ler_matrizesStrings(sc);
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
         imprimir_tabela(nomes, redes_sociais, minutos);
+        imprimir_totais(nomes, minutos);
         sc.close();
     }
 
@@ -48,6 +49,26 @@ public class DD_1261357_1261084 {
                 System.out.printf("%-12d", minutos[i][j]);
             }
             System.out.println();
+        }
+        System.out.println();
+    }
+
+    //Descrição: Calcular total de minutos por pessoa nas redes sociais
+    public static int calcular_total(int[] linha){
+        int total = 0;
+        for (int j=0; j < linha.length; j++){
+            total +=linha[j];
+
+        }
+        return total;
+    }
+
+    //Descrição: Imprimir o total de minutos de cada pessoa
+    public static void imprimir_totais(String[] nomes, int[][] minutos) {
+        System.out.println("c) Total Minutes per Person");
+        for (int i = 0; i < nomes.length; i++) {
+            int total = calcular_total(minutos[i]);   // passa a linha da pessoa i
+            System.out.printf("%-12s%d%n", nomes[i], total);
         }
         System.out.println();
     }
