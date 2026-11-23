@@ -12,8 +12,8 @@ public class DD_1261357_1261084 {
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
         imprimir_tabela(nomes, redes_sociais, minutos);
         imprimir_totais(nomes, minutos, redes_sociais);
-        imprimir_mais_ativos(nomes, redes_sociais, minutos); // Alínea d)
-        imprimir_acima_media_todas(nomes, redes_sociais, minutos); // Alínea e)
+        imprimir_mais_ativos(nomes, redes_sociais, minutos);
+        imprimir_acima_media_todas(nomes, redes_sociais, minutos);
         sc.close();
     }
 
@@ -27,7 +27,7 @@ public class DD_1261357_1261084 {
         return elementos;
     }
 
-    // Descrição: Ler Matriz dos Minutos (uma linha por pessoa e uma coluna por rede social)[cite: 103]
+    // Descrição: Ler Matriz dos Minutos (uma linha por pessoa e uma coluna por rede social)
     public static int[][] ler_minutos(Scanner sc, int numero_pessoas, int numero_redes) {
         int[][] minutos = new int[numero_pessoas][numero_redes];
         for (int linha = 0; linha < minutos.length; linha++) {
@@ -38,7 +38,7 @@ public class DD_1261357_1261084 {
         return minutos;
     }
 
-    // Descrição: Imprimir todos os dados em formato de tabela[cite: 104]
+    // Descrição: Imprimir todos os dados em formato de tabela
     public static void imprimir_tabela(String[] nomes, String[] redes, int[][] minutos) {
         System.out.println("b) Social Media Usage (minutes/day)");
         System.out.printf("%-12s", "");
@@ -65,7 +65,7 @@ public class DD_1261357_1261084 {
         return total;
     }
 
-    // Descrição: Imprimir o total de minutos de cada pessoa[cite: 104]
+    // Descrição: Imprimir o total de minutos de cada pessoa
     public static void imprimir_totais(String[] nomes, int[][] minutos, String[] redes_sociais) {
         System.out.println("c) Daily usage");
         for (int i = 0; i < nomes.length; i++) {
@@ -76,7 +76,7 @@ public class DD_1261357_1261084 {
         System.out.println();
     }
 
-    // Descrição: Encontrar o valor máximo de minutos numa determinada coluna (rede social)[cite: 103, 104]
+    // Descrição: Encontrar o valor máximo de minutos numa determinada coluna
     public static int encontrar_maximo_coluna(int[][] minutos, int coluna) {
         int max = minutos[0][coluna];
         for (int i = 1; i < minutos.length; i++) {
@@ -87,7 +87,7 @@ public class DD_1261357_1261084 {
         return max;
     }
 
-    // Descrição: Imprimir a pessoa ou pessoas que mais utilizaram cada rede social (Alínea d)[cite: 104]
+    // Descrição: Imprimir a pessoa ou pessoas que mais utilizaram cada rede social
     public static void imprimir_mais_ativos(String[] nomes, String[] redes_sociais, int[][] minutos) {
         System.out.println("d) Most active");
         System.out.println("Users");
@@ -119,7 +119,7 @@ public class DD_1261357_1261084 {
         return (double) soma / minutos.length;
     }
 
-    // Descrição: Visualizar pessoas cujo tempo de utilização é superior à média em todas as redes sociais (Alínea e)[cite: 104]
+    // Descrição: Visualizar pessoas cujo tempo de utilização é superior à média em todas as redes sociais
     public static void imprimir_acima_media_todas(String[] nomes, String[] redes_sociais, int[][] minutos) {
         System.out.println("e) Users consistently above average");
 
