@@ -10,10 +10,17 @@ public class DD_1261357_1261084 {
         String[] nomes = ler_matrizesStrings(sc);
         String[] redes_sociais = ler_matrizesStrings(sc);
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
+
         imprimir_tabela(nomes, redes_sociais, minutos);
         imprimir_totais(nomes, minutos, redes_sociais);
         imprimir_mais_ativos(nomes, redes_sociais, minutos);
         imprimir_acima_media_todas(nomes, redes_sociais, minutos);
+        imprimir_mais_utilizada(nomes, redes_sociais, minutos);
+        imprimir_percentagem_utilizacao(nomes, redes_sociais, minutos);
+        imprimir_perfis_utilizadores(nomes, minutos);
+        imprimir_ranking_redes_sociais(redes_sociais, minutos);
+        imprimir_utilizadores_mais_equilibrados(nomes, redes_sociais, minutos);
+
         sc.close();
     }
 
@@ -59,7 +66,7 @@ public class DD_1261357_1261084 {
     // Descrição: Calcular total de minutos por pessoa nas redes sociais
     public static int calcular_total(int[] linha){
         int total = 0;
-        for (int j=0; j < linha.length; j++){
+        for (int j = 0; j < linha.length; j++){
             total += linha[j];
         }
         return total;
@@ -76,7 +83,7 @@ public class DD_1261357_1261084 {
         System.out.println();
     }
 
-    // Descrição: Encontrar o valor máximo de minutos numa determinada coluna
+    // Descrição: Encontrar o valor máximo de minutos numa determinada coluna (rede social)
     public static int encontrar_maximo_coluna(int[][] minutos, int coluna) {
         int max = minutos[0][coluna];
         for (int i = 1; i < minutos.length; i++) {
@@ -146,6 +153,212 @@ public class DD_1261357_1261084 {
         if (!encontrou) {
             System.out.println("none");
         }
+        System.out.println();
+    }
+
+    // Descrição: Visualizar, para cada pessoa, a sua rede social mais utilizada
+    public static void imprimir_mais_utilizada(String[] nomes, String[] redes_sociais, int[][] minutos) {
+        System.out.println("f) Most used social network");
+        for (int i = 0; i < nomes.length; i++) {
+            int max = minutos[i][0];
+            for (int j = 1; j < redes_sociais.length; j++) {
+                if (minutos[i][j] > max) {
+                    max = minutos[i][j];
+                }
+            }
+            System.out.printf("%-10s : ", nomes[i]);
+            for (int j = 0; j < redes_sociais.length; j++) {
+                if (minutos[i][j] == max) {
+                    System.out.printf("[%s] ", redes_sociais[j]);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    // Descrição: Visualizar, para cada pessoa, a percentagem do tempo de utilização de cada uma das suas redes sociais
+    public static void imprimir_percentagem_utilizacao(String[] nomes, String[] redes_sociais, int[][] minutos) {
+        System.out.println("g) Percentage of use");
+        System.out.printf("%-12s", "");
+        for (int j = 0; j < redes_sociais.length; j++) {
+            System.out.printf("%-12s", redes_sociais[j]);
+        }
+        System.out.println();
+
+        for (int i = 0; i < nomes.length; i++) {
+            System.out.printf("%-12s", nomes[i]);
+            int total = calcular_total(minutos[i]);
+            for (int j = 0; j < redes_sociais.length; j++) {
+                if (total > 0 && minutos[i][j] > 0) {
+                    double perc = ((double) minutos[i][j] / total) * 100;
+                    System.out.printf("%-12.2f%%", perc);
+                } else {
+                    System.out.printf("%-12s", "");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    // Descrição: Visualizar os perfis de utilizador com base no tempo total diário
+    public static void imprimir_perfis_utilizadores(String[] nomes, int[][] minutos) {
+        System.out.println("h) Users profile");
+        String[] categorias = {"Moderate", "Regular", "Intensive", "Very Intensive"};
+
+        for (int j = 0; j < categorias.length; j++) {
+            System.out.printf("%-16s", categorias[j]);
+        }
+        System.out.println();
+
+        String[][] perfis = new String[nomes.length][4];
+        int[] contagens = new int[4];
+
+        for (int i = 0; i < nomes.length; i++) {
+            int total = calcular_total(minutos[i]);
+            int col = -1;
+            if (total < 90) {
+                col = 0;
+            } else if (total <= 180) {
+                col = 1;
+            } else if (total <= 300) {
+                col = 2;
+            } else {
+                col = 3;
+            }
+            perfis[contagens[col]][col] = nomes[i];
+            contagens[col]++;
+        }
+
+        int max_linhas = 0;
+        for (int j = 0; j < 4; j++) {
+            if (contagens[j] > max_linhas) {
+                max_linhas = contagens[j];
+            }
+        }
+
+        for (int linha = 0; linha < max_linhas; linha++) {
+            for (int col = 0; col < 4; col++) {
+                if (linha < contagens[col]) {
+                    System.out.printf("%-16s", perfis[linha][col]);
+                } else {
+                    System.out.printf("%-16s", "");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    // Descrição: Visualizar graficamente as redes sociais ordenadas e o respetivo histograma
+    public static void imprimir_ranking_redes_sociais(String[] redes_sociais, int[][] minutos) {
+        System.out.println("i) Use of social networks");
+
+        int n_redes = redes_sociais.length;
+        int[] total_tempo = new int[n_redes];
+        int[] total_utilizadores = new int[n_redes];
+        int global_total_tempo = 0;
+
+        for (int j = 0; j < n_redes; j++) {
+            for (int i = 0; i < minutos.length; i++) {
+                total_tempo[j] += minutos[i][j];
+                if (minutos[i][j] > 0) {
+                    total_utilizadores[j]++;
+                }
+            }
+            global_total_tempo += total_tempo[j];
+        }
+
+        String[] redes_ord = new String[n_redes];
+        int[] tempo_ord = new int[n_redes];
+        for (int j = 0; j < n_redes; j++) {
+            redes_ord[j] = redes_sociais[j];
+            tempo_ord[j] = total_tempo[j];
+        }
+
+        for (int i = 0; i < n_redes - 1; i++) {
+            for (int k = i + 1; k < n_redes; k++) {
+                boolean trocar = false;
+                if (tempo_ord[k] > tempo_ord[i]) {
+                    trocar = true;
+                } else if (tempo_ord[k] == tempo_ord[i]) {
+                    if (total_utilizadores[k] > total_utilizadores[get_original_index(redes_sociais, redes_ord[i])]) {
+                        trocar = true;
+                    } else if (total_utilizadores[k] == total_utilizadores[get_original_index(redes_sociais, redes_ord[i])]) {
+                        if (redes_ord[k].compareTo(redes_ord[i]) < 0) {
+                            trocar = true;
+                        }
+                    }
+                }
+                if (trocar) {
+                    String aux_r = redes_ord[i];
+                    redes_ord[i] = redes_ord[k];
+                    redes_ord[k] = aux_r;
+
+                    int aux_t = tempo_ord[i];
+                    tempo_ord[i] = tempo_ord[k];
+                    tempo_ord[k] = aux_t;
+                }
+            }
+        }
+
+        for (int j = 0; j < n_redes; j++) {
+            int idx_orig = get_original_index(redes_sociais, redes_ord[j]);
+            double perc = global_total_tempo > 0 ? ((double) total_tempo[idx_orig] / global_total_tempo) * 100 : 0;
+            System.out.printf("%-12s %6.2f%% ", redes_ord[j], perc);
+
+            int asteriscos = (int) (perc / 5);
+            for (int a = 0; a < asteriscos; a++) {
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+        System.out.println("            %   25   50   75   100");
+        System.out.println();
+    }
+
+    public static int get_original_index(String[] redes, String nome) {
+        for (int j = 0; j < redes.length; j++) {
+            if (redes[j].equals(nome)) {
+                return j;
+            }
+        }
+        return 0;
+    }
+
+    // Descrição: Determinar o(s) utilizador(es) com utilização mais equilibrada entre redes sociais
+    public static void imprimir_utilizadores_mais_equilibrados(String[] nomes, String[] redes_sociais, int[][] minutos) {
+        System.out.println("j) Most balanced users");
+
+        double menor_dif = -1;
+        int[] diferencas = new int[nomes.length];
+
+        for (int i = 0; i < nomes.length; i++) {
+            int max = minutos[i][0];
+            int min = minutos[i][0];
+            for (int j = 1; j < redes_sociais.length; j++) {
+                if (minutos[i][j] > max) max = minutos[i][j];
+                if (minutos[i][j] < min) min = minutos[i][j];
+            }
+            diferencas[i] = max - min;
+            if (i == 0 || diferencas[i] < menor_dif) {
+                menor_dif = diferencas[i];
+            }
+        }
+
+        boolean primeiro = true;
+        System.out.print("{");
+        for (int i = 0; i < nomes.length; i++) {
+            if (diferencas[i] == menor_dif) {
+                if (!primeiro) {
+                    System.out.print(", ");
+                }
+                System.out.printf("\"%s\"", nomes[i]);
+                primeiro = false;
+            }
+        }
+        System.out.println("}");
         System.out.println();
     }
 }
