@@ -7,6 +7,13 @@ public class DD_1261357_1261084 {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
+
+        int opcao = ler_opcao_menu(sc);
+        if (opcao == 0) {
+            sc.close();
+            return;
+        }
+
         String[] nomes = ler_matrizesStrings(sc);
         String[] redes_sociais = ler_matrizesStrings(sc);
         int[][] minutos = ler_minutos(sc, nomes.length, redes_sociais.length);
@@ -22,6 +29,26 @@ public class DD_1261357_1261084 {
         imprimir_utilizadores_mais_equilibrados(nomes, redes_sociais, minutos);
 
         sc.close();
+    }
+
+    // Descrição: Mostrar o menu e ler a opção escolhida (0 = ficheiro, 1 = manual)
+    public static int ler_opcao_menu(Scanner sc) {
+        int opcao = -1;
+        while (opcao != 0 && opcao != 1) {
+            System.out.println("0 - Ler dados de ficheiro");
+            System.out.println("1 - Introduzir dados manualmente");
+            System.out.print("Opcao: ");
+            String linha = sc.nextLine().trim();
+            if (linha.equals("0")) {
+                opcao = 0;
+            } else if (linha.equals("1")) {
+                opcao = 1;
+            } else {
+                System.out.println("Opcao invalida.");
+            }
+        }
+        System.out.println();
+        return opcao;
     }
 
     // Descrição: Ler Listas Strings (Nomes e Redes Sociais)
@@ -192,7 +219,7 @@ public class DD_1261357_1261084 {
             for (int j = 0; j < redes_sociais.length; j++) {
                 if (total > 0 && minutos[i][j] > 0) {
                     double perc = ((double) minutos[i][j] / total) * 100;
-                    System.out.printf("%-12.2f%%", perc);
+                    System.out.printf("%-12s", String.format("%.2f%%", perc));
                 } else {
                     System.out.printf("%-12s", "");
                 }
